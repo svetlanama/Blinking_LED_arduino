@@ -15,6 +15,11 @@ void setup() {
   Serial.begin(9600); // for pront data
   pinMode(LED, OUTPUT);
 
+//   sendOneSignal();
+//   sendBreakSignal();
+//   sendZeroSignal();
+//   sendBreakSignal();
+        
   /*while (gcycleTime > 0) {
     while (cycleTime > 0) {
       if (cycleTime > 0) {
@@ -36,7 +41,7 @@ void setup() {
     delay(1000);
     //} */
 
-  printText();
+   printText();
 }
 
 void loop() {
@@ -61,7 +66,7 @@ void sendStartSignal() {
 
 
 void sendOneSignal() {
-  Serial.println(" = OneSignal ");
+  //Serial.println(" = OneSignal ");
 
   digitalWrite(LED, HIGH);
   double _delay = 1000; //frameSequence * 2;
@@ -73,7 +78,7 @@ void sendOneSignal() {
 
 
 void sendZeroSignal() {
-  Serial.println(" = ZeroSignal ");
+  //Serial.println(" = ZeroSignal ");
 
   digitalWrite(LED, HIGH);
   double _delay = 500;
@@ -84,7 +89,17 @@ void sendZeroSignal() {
 }
 
 void sendBreakSignal() {
-  Serial.println(" = BreakSignal ");
+  //Serial.println(" = BreakSignal ");
+
+  digitalWrite(LED, LOW);
+  double _delay = 500;
+  delay(_delay);
+
+  cycleTime -= _delay;
+}
+
+void sendLongBreakSignal() {
+  Serial.println(" = LongBreakSignal ");
 
   digitalWrite(LED, LOW);
   double _delay = 1000;
@@ -93,15 +108,14 @@ void sendBreakSignal() {
   cycleTime -= _delay;
 }
 
-
 void printText() {
-  String myText = "h"; //"shins";
-  sendStartSignal();
-  sendBreakSignal();
-
+  String myText = "shins";
+  //sendStartSignal();
+  //sendBreakSignal();
+   Serial.println(myText);
   for (int i = 0; i < myText.length(); i++) {
     char myChar = myText.charAt(i);
-    Serial.println(myChar);
+    //Serial.println(myChar);
     for (int i = 7; i >= 0; i--) {
 
       byte bytes = bitRead(myChar, i);
@@ -114,9 +128,10 @@ void printText() {
         sendBreakSignal();
       }
     }
-
+    
+    //sendLongBreakSignal();
     //Serial.println(cycleTime);
-    Serial.println("");
+    Serial.print(" ");
 
   }
 
